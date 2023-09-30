@@ -29,13 +29,11 @@ class WordScrambler extends PluginBase implements Listener{
         $this->getScheduler()->scheduleDelayedTask(new ScrambleTask($this), (20 * 60 * $this->getConfig()->get("Scramble-Time")));
     }
 
-    public function onChat(playerChatEvent $event)
-    {
+    public function onChat(PlayerChatEvent $event){
         $player = $event->getPlayer();
         $msg = $event->getMessage();
 
-        if (strtolower($msg) == strtolower($this->word))
-        {
+        if ($msg !== null && $this->word !== null && strtolower($msg) == strtolower($this->word)) {
             $event->cancel();
             $this->playerWon($player);
             $this->word = null;
